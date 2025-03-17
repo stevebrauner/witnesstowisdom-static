@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Witness To Wisdom</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css" />
+  </head>
+  <body>
+    {% include nav.html %}
+
+    <main>
+      <div class="container mt-3">{{ content }}</div>
+    </main>
+
+    <footer>
+      <div class="text-center bg-custom p-4">
+        <div>&copy; Steven Brauner</div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="/assets/js/bootstrap.min.js"></script>
+
+    <!-- Contact Form JS-->
+    {% if page.title contains 'Contact' %}
+      {% include head-contact.html %}
+    {% endif %}
+
+    <!-- JavaScript -->
+    <script src="/assets/js/main.js"></script>
+  </body>
+</html>

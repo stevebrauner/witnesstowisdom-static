@@ -1,0 +1,51 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+  function invokeAWSAPI(e) {
+    e.preventDefault();
+
+    var name = $("#form-name").val();
+    var nameRe = /^[A-Za-z]{1}[A-Za-z _]*$/;
+    if (!nameRe.test(name)) {
+      alert("Please enter a name with only letters, spaces, or underscores, and must begin with a letter.");
+      return;
+    }
+
+    var email = $("#form-email").val();
+    var emailRe = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRe.test(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    var msg = $("#form-message").val();
+    var msgRe = /^[a-zA-Z0-9.,!?\s]*$/;
+    if (!msgRe.test(msg)) {
+      alert(
+        "Please enter a message with only letters, numbers, spaces, punctuation, tab, and newlines.",
+      );
+      return;
+    }
+
+    var data = {
+      name: name,
+      email: email,
+      msg: msg,
+    };
+
+    $.ajax({
+      type: "POST",
+      url: "https://ewbzlzz13m.execute-api.us-east-1.amazonaws.com/witnesstowisdom-contact-form",
+      dataType: "json",
+      crossDomain: "true",
+      data: JSON.stringify(data),
+      success: function () {
+        alert("Email sent successfully!");
+        document.getElementById("contact-form").reset();
+        location.reload();
+      },
+      error: function () {
+        alert("Email failed to send.");
+      },
+    });
+  }
+</script>
