@@ -11,46 +11,27 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  AWS_REGION: us-east-1
+
 permissions:
   contents: read
-  pages: write
   id-token: write
 
 jobs:
-  build:
+  AssumeRoleAndCallIdentity:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Git clone the directory
+        uses: actions/checkout@v3
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
-          fetch-depth: 0
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_ARN }}
+          role-session-name: Github_to_AWS_via_FederatedOIDC
+          aws-region: ${{ env.AWS_REGION }}
 
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.2
-          bundler-cache: true
-
-      - name: Build site
-        run: bundle exec jekyll b -d "_site"
-        env:
-          JEKYLL_ENV: "production"
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GitHubAction-AssumeRoleWithAction
-          aws-region: us-east-1
-          role-external-id: ${{ secrets.ROLE_EXTERNAL_ID }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          role-skip-session-tagging: true
-
-      - name: Copy files to S3
-        run: |
-          aws s3 sync _site s3://${{ secrets.AWS_S3_BUCKET_NAME }} --exact-timestamps --delete
-
-      - name: Clear cache of CloudFront
-        run: |
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
+      - name: Sts GetCallerIdentity
+        run: aws sts get-caller-identity
