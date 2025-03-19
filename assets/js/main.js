@@ -1,3 +1,3 @@
-window.addEventListener('load' => {
-  console.log('Page loaded');
+window.addEventListener("load", (event) => {
+  console.log("Page loaded");
 });
