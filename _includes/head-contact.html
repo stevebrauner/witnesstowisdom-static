@@ -6,7 +6,9 @@
     var name = $("#form-name").val();
     var nameRe = /^[A-Za-z]{1}[A-Za-z _]*$/;
     if (!nameRe.test(name)) {
-      alert("Please enter a name with only letters, spaces, or underscores, and must begin with a letter.");
+      alert(
+        "Please enter a name with only letters, spaces, or underscores, and must begin with a letter.",
+      );
       return;
     }
 
@@ -37,6 +39,7 @@
       url: "https://ewbzlzz13m.execute-api.us-east-1.amazonaws.com/witnesstowisdom-contact-form",
       dataType: "json",
       crossDomain: "true",
+      contentType: "application/json; charset=utf-8",
       data: JSON.stringify(data),
       success: function () {
         alert("Email sent successfully!");
