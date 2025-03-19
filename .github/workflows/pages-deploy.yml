@@ -23,8 +23,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Git clone the directory
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.2
+          bundler-cache: true
+
+      - name: Build site
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: "production"
 
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
