@@ -29,9 +29,9 @@
     }
 
     var data = {
-      "name": name,
-      "email": email,
-      "msg": msg,
+      name: name,
+      email: email,
+      msg: msg,
     };
 
     $.ajax({
@@ -42,7 +42,7 @@
       contentType: "application/json; charset=utf-8",
       headers: {
         "Access-Control-Allow-Origin": "witnesstowisdom.com",
-        "Access-Control-Allow-Credentials: true",
+        "Access-Control-Allow-Credentials": "true",
       },
       data: JSON.stringify(data),
       success: function () {
