@@ -36,14 +36,10 @@
 
     $.ajax({
       type: "POST",
-      url: "https://ewbzlzz13m.execute-api.us-east-1.amazonaws.com/witnesstowisdom-contact-form",
+      url: "https://a1atv01ai0.execute-api.us-east-1.amazonaws.com/prod",
       dataType: "json",
       crossDomain: "true",
       contentType: "application/json; charset=utf-8",
-      headers: {
-        "Access-Control-Allow-Origin": "witnesstowisdom.com",
-        "Access-Control-Allow-Credentials": "true",
-      },
       data: JSON.stringify(data),
       success: function () {
         alert("Email sent successfully!");
